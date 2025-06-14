@@ -1,0 +1,62 @@
+# Arduino IDE
+*.hex
+*.elf
+*.bin
+*.map
+*.eep
+*.lss
+*.sym
+*.o
+*.d
+*.a
+
+# Build directories
+build/
+.build/
+*.tmp/
+
+# Arduino IDE files
+.vscode/
+.pio/
+.pioenvs/
+.piolibdeps/
+.clang_complete
+.gcc-flags.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+desktop.ini
+
+# Logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# ESP32/Arduino specific
+*.bin
+*.elf
+*.map
+partitions.csv

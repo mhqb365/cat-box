@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bồn lựu đạn của 🐱 Noel</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 20px;
+        background: #f0f0f0;
+      }
+      li {
+        list-style: none;
+      }
+      .container {
+        max-width: 400px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .status {
+        background: #e8f4fd;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+      .button {
+        display: inline-block;
+        padding: 12px 24px;
+        margin: 5px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        min-width: 100px;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-on {
+        background: #28a745;
+        color: white;
+      }
+      .btn-off {
+        background: #dc3545;
+        color: white;
+      }
+      .btn-auto {
+        background: #007bff;
+        color: white;
+      }
+      .btn-on:hover {
+        background: #218838;
+      }
+      .btn-off:hover {
+        background: #c82333;
+      }
+      .btn-auto:hover {
+        background: #0056b3;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Bồn lựu đạn của 🐱 Noel</h1>
+      <div class="status">
+        <li>WiFi: <strong id="wifi-status">%WIFI_STATE%</strong></li>
+        <li>Chế độ: <strong id="mode-status">%MODE%</strong></li>
+        <li>Quạt: <strong id="relay-status">%RELAY_STATE%</strong></li>
+        <li>Cảm biến: <strong id="pir-status">%PIR_STATE%</strong></li>
+      </div>
+      <div style="text-align: center">
+        <button id="btn-on" class="button btn-on">BẬT RELAY</button>
+        <button id="btn-off" class="button btn-off">TẮT RELAY</button><br />
+        <button id="btn-auto" class="button btn-auto">CHẾ ĐỘ TỰ ĐỘNG</button>
+      </div>
+
+      <script>
+        $(document).ready(function () {
+          $("#btn-on").click(function () {
+            $.get("/relay/on", function (data) {
+              updateStatus();
+            });
+          });
+
+          $("#btn-off").click(function () {
+            $.get("/relay/off", function (data) {
+              updateStatus();
+            });
+          });
+
+          $("#btn-auto").click(function () {
+            $.get("/auto", function (data) {
+              updateStatus();
+            });
+          });
+
+          function updateStatus() {
+            $.get("/status", function (data) {
+              if (data.relay) $("#relay-status").text(data.relay);
+              if (data.mode) $("#mode-status").text(data.mode);
+              if (data.pir) $("#pir-status").text(data.pir);
+              if (data.wifi) $("#wifi-status").text(data.wifi);
+            }).fail(function () {
+              console.log("Không thể cập nhật trạng thái");
+            });
+          }
+
+          updateStatus();
+          setInterval(updateStatus, 5000);
+        });
+      </script>
+    </div>
+  </body>
+</html>
